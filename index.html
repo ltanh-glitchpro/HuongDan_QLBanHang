@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</title>
+  <style>
+    body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:#121214;color:#E8E8E8;margin:0;padding:24px;}
+    header{margin-bottom:18px}
+    h1{font-size:24px;margin:0 0 6px}
+    h2{font-size:18px;margin:18px 0 8px;color:#ffd0e0}
+    h3{font-size:14px;margin:12px 0 6px;color:#ffd0e0}
+    p{margin:8px 0}
+    ul{margin:6px 0 12px 20px}
+    code{background:#1e1e1f;padding:2px 6px;border-radius:4px;color:#fff}
+    .toc a{color:#a8c1ff;text-decoration:none}
+    .note{background:#23232a;padding:10px;border-left:4px solid #ffd0e0;margin:12px 0}
+    footer{margin-top:28px;font-size:12px;color:#9a9a9a}
+    .kbd{display:inline-block;padding:2px 6px;border-radius:4px;background:#1f1f24;border:1px solid #2c2c34}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</h1>
+    <p>Phiên bản hướng dẫn cho bộ mã nguồn hiện tại. Tài liệu này mô tả các chức năng chính và cách thao tác để người dùng nhanh chóng sử dụng ứng dụng.</p>
+  </header>
+
+  <section class="toc">
+    <h2>Mục lục</h2>
+    <ul>
+      <li><a href="#prereq">Yêu cầu & khởi chạy</a></li>
+      <li><a href="#login">Đăng nhập / Quên mật khẩu</a></li>
+      <li><a href="#nav">Giao diện & điều hướng</a></li>
+      <li><a href="#dashboard">Dashboard (Trang tổng quan)</a></li>
+      <li><a href="#orders">Đơn hàng</a></li>
+      <li><a href="#products">Sản phẩm</a></li>
+      <li><a href="#customers">Khách hàng</a></li>
+      <li><a href="#import-export">Backup / Import (CSV)</a></li>
+      <li><a href="#reports">Báo cáo & In ấn</a></li>
+      <li><a href="#management">Quản lý (Nhân viên, NCC, Chi nhánh...)</a></li>
+      <li><a href="#settings">Cài đặt giao diện & font</a></li>
+      <li><a href="#profile">Hồ sơ cá nhân & Đổi mật khẩu</a></li>
+      <li><a href="#shortcuts">Phím tắt quan trọng</a></li>
+      <li><a href="#troubleshoot">Lỗi thường gặp & Khắc phục</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Liên hệ hỗ trợ</a></li>
+    </ul>
+  </section>
+
+  <section id="prereq">
+    <h2>1. Yêu cầu & khởi chạy</h2>
+    <ul>
+      <li>Yêu cầu hệ thống: .NET Runtime 8 (hoặc Visual Studio 2022 / 2023 với .NET 8 SDK) và kết nối đến SQL Server chứa database dự án.</li>
+      <li>Cách chạy:
+        <ul>
+          <li>Mở solution bằng Visual Studio → Build → Run (F5) hoặc chạy file exe trong thư mục output.</li>
+          <li>File cấu hình kết nối nằm trong lớp DbContext. Mặc định dự án dùng SQL Server (xem file kết nối trong code).</li>
+        </ul>
+      </li>
+      <li>Quyền: tài khoản đăng nhập có phân quyền (Thu ngân / Kho / Quản lý) để hiện - ẩn các nút nghiệp vụ.</li>
+    </ul>
+  </section>
+
+  <section id="login">
+    <h2>2. Đăng nhập & Quên mật khẩu</h2>
+    <p>Trang đăng nhập yêu cầu <strong>Tên đăng nhập</strong> và <strong>Mật khẩu</strong>. Sau khi đăng nhập thành công, hệ thống sẽ gán thông tin người dùng (tên, quyền, chi nhánh) vào giao diện chính.</p>
+    <ul>
+      <li>Quên mật khẩu: dùng liên kết "Quên mật khẩu" để mở form lấy lại mật khẩu (theo luồng đã triển khai).</li>
+      <li>Nếu tài khoản bị khóa (TrangThai = false) sẽ không thể đăng nhập.</li>
+    </ul>
+  </section>
+
+  <section id="nav">
+    <h2>3. Giao diện & điều hướng chính</h2>
+    <p>Thanh bên trái chứa menu chức năng chính: Dashboard, Đơn hàng, Sản phẩm, Khách hàng, Nhập hàng, Thống kê, Quản lý, Cài đặt, Đăng xuất.</p>
+    <p>Phần giữa là khu vực làm việc (UserControl) — các module sẽ được load vào panel chính.</p>
+    <p>Phần phải hiển thị thông tin người dùng và banner ảnh. Avatar người dùng lấy từ dữ liệu trong CSDL.</p>
+  </section>
+
+  <section id="dashboard">
+    <h2>4. Dashboard (Trang tổng quan)</h2>
+    <p>Hiển thị các chỉ số nhanh: tổng đơn, doanh thu, số sản phẩm, biểu đồ top sản phẩm bán chạy. Trang tự động load dữ liệu khi mở.</p>
+  </section>
+
+  <section id="orders">
+    <h2>5. Đơn hàng</h2>
+    <h3>Danh sách & thao tác</h3>
+    <ul>
+      <li>Hiển thị danh sách hóa đơn, bạn có thể tìm kiếm theo nhiều tiêu chí (Mã, Tên khách, Điện thoại, Thu ngân, Thanh toán, Tổng tiền, Ngày bán).</li>
+      <li>Chức năng: Tạo hóa đơn, Sửa, Xóa (xóa sẽ hoàn trả hàng vào kho), In hóa đơn, Xem chi tiết.</li>
+      <li>Import/Export: có chức năng export dữ liệu thô dưới dạng CSV (dùng để backup) và import trở lại (cần đúng định dạng).</li>
+    </ul>
+  </section>
+
+  <section id="products">
+    <h2>6. Sản phẩm</h2>
+    <p>Module quản lý sản phẩm bao gồm danh sách dạng thẻ (ProductCard), thêm/sửa/xóa, tìm kiếm, lọc, sắp xếp.</p>
+
+    <h3>Một số lưu ý quan trọng</h3>
+    <ul>
+      <li>ProductCard hiển thị theo thiết kế file Designer của control `UC_ProductCard` — mặc định hiển thị font kích thước thiết kế (thiết kế ban đầu), thay đổi kích thước hệ thống KHÔNG làm thay đổi font hiển thị ProductCard (điều này là intentional).</li>
+      <li>Nếu bạn muốn ProductCard đổi theo cài đặt hệ thống, hãy chỉnh `UC_ProductCard` (labels) để chịu ảnh hưởng font chung hoặc bật tính năng đồng bộ trong mã.</li>
+      <li>Để tránh lặp card khi reload: hệ thống đã xóa sạch controls trước khi add lại; nếu vẫn gặp lặp, kiểm tra log hoặc gọi Load lại (F5).</li>
+    </ul>
+  </section>
+
+  <section id="customers">
+    <h2>7. Khách hàng</h2>
+    <p>Quản lý thông tin khách hàng: thêm, sửa, tìm kiếm. Các thông tin bao gồm tên, điện thoại, điểm tích lũy, địa chỉ.</p>
+  </section>
+
+  <section id="import-export">
+    <h2>8. Backup / Import (CSV)</h2>
+    <p>Trong module Đơn hàng có chức năng xuất file CSV backup. Định dạng file xuất gồm các cột thô phục vụ import lại.</p>
+    <p>Import chặt chẽ: nếu dữ liệu trùng hoặc tham chiếu tới mã không tồn tại (khách hàng, nhân viên, sản phẩm, hình thức thanh toán) thì quá trình import sẽ bị từ chối để tránh dữ liệu hỏng.</p>
+  </section>
+
+  <section id="reports">
+    <h2>9. Báo cáo & In ấn</h2>
+    <p>Ứng dụng hỗ trợ báo cáo doanh thu (ReportViewer) và in hóa đơn. Báo cáo có thể cấu hình bộ lọc (từ ngày, đến ngày, nhân viên, ngưỡng doanh thu).</p>
+  </section>
+
+  <section id="management">
+    <h2>10. Quản lý (Admin)</h2>
+    <p>Nếu bạn có quyền Quản lý/Admin, hiển thị thêm module Quản lý: Nhân viên, Nhà cung cấp, Khuyến mãi, Chi nhánh, Hình thức thanh toán,...</p>
+    <p>Phân quyền được đọc từ trường chức vụ/tên quyền (cập nhật tại thời điểm đăng nhập).</p>
+  </section>
+
+  <section id="settings">
+    <h2>11. Cài đặt giao diện & font</h2>
+    <p>Vào <strong>Cài đặt → Giao diện/Hiển thị</strong> để thay đổi:</p>
+    <ul>
+      <li>Theme (Dark, Blue, Green, ...)</li>
+      <li>Font hệ thống</li>
+      <li>Kích cỡ chữ (hệ thống) — hợp lệ: 9 → 16</li>
+    </ul>
+
+    <div class="note">
+      <strong>Lưu ý thiết kế:</strong>
+      <ul>
+        <li>Thay đổi font/kích cỡ sẽ được áp dụng đệ quy lên hầu hết các control trên form chính và usercontrols, nhưng <em>ProductCard</em> đã được cấu hình giữ nguyên font thiết kế để bảo toàn bố cục thẻ. Nếu bạn muốn ProductCard cũng thay đổi, cần sửa `UC_ProductCard` để cho phép đồng bộ.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="profile">
+    <h2>12. Hồ sơ cá nhân & Đổi mật khẩu</h2>
+    <ul>
+      <li>Trong Cài đặt phần "Hồ sơ" bạn có thể cập nhật: tên hiển thị, số điện thoại, email, ngày sinh, giới tính và avatar.</li>
+      <li>Đổi mật khẩu: mở form đổi mật khẩu, nhập mật khẩu cũ và mật khẩu mới, hệ thống kiểm tra khớp và lưu xuống DB.</li>
+      <li>Quên mật khẩu: sử dụng form Quên mật khẩu để lấy lại theo luồng đã triển khai.</li>
+    </ul>
+  </section>
+
+  <section id="shortcuts">
+    <h2>13. Phím tắt quan trọng</h2>
+    <ul>
+      <li><span class="kbd">F2</span> — Tạo mới (thường ở các module: sản phẩm / hóa đơn)</li>
+      <li><span class="kbd">F4</span> — Sửa mục chọn</li>
+      <li><span class="kbd">Delete</span> — Xóa (khi có quyền)</li>
+      <li><span class="kbd">F3</span> — Focus ô tìm kiếm</li>
+      <li><span class="kbd">F5</span> — Tải lại dữ liệu hiện tại</li>
+    </ul>
+  </section>
+
+  <section id="troubleshoot">
+    <h2>14. Các lỗi thường gặp & khắc phục</h2>
+    <h3>Không khởi động / lỗi kết nối DB</h3>
+    <p>Kiểm tra connection string trong cấu hình DbContext, đảm bảo SQL Server đang chạy và user có quyền truy cập.</p>
+
+    <h3>Avatar/ảnh banner không hiển thị</h3>
+    <ul>
+      <li>Kiểm tra trường ảnh trong DB (blob) được lưu đúng định dạng PNG/JPEG.</li>
+      <li>Nếu resource mặc định bị xóa, phục hồi file trong `Properties/Resources` hoặc đặt ảnh mặc định mới.</li>
+    </ul>
+
+    <h3>ProductCard không đổi font khi thay theme</h3>
+    <p>Đây là hành vi cố ý: ProductCard giữ font từ thiết kế. Nếu muốn thay đổi, chỉnh file `UC_ProductCard` để cho phép nhận font hệ thống.</p>
+  </section>
+
+  <section id="faq">
+    <h2>15. Câu hỏi thường gặp (FAQ)</h2>
+    <h3>Tôi là nhân viên, không thấy nút Xóa?</h3>
+    <p>Hệ thống ẩn các chức năng nhạy cảm nếu tài khoản không thuộc nhóm Quản lý/Admin.</p>
+
+    <h3>Muốn thêm trường cho sản phẩm (ví dụ: màu sắc) phải làm sao?</h3>
+    <p>Sửa model `SanPham` trong thư mục Data, cập nhật DbContext/migrations và chỉnh UI tương ứng (form thêm/sửa sản phẩm + hiển thị trên ProductCard).</p>
+  </section>
+
+  <section id="contact">
+    <h2>16. Liên hệ & Hỗ trợ</h2>
+    <p>Nếu cần hỗ trợ triển khai/tuỳ biến, liên hệ với người phát triển dự án hoặc quản lý codebase. Ghi chú thông tin:</p>
+    <ul>
+      <li>Chi tiết lỗi (screenshot, stack trace nếu có)</li>
+      <li>Phiên bản .NET và hệ điều hành</li>
+      <li>Hướng dẫn phục hồi DB nếu cần</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Ghi chú: tài liệu này soạn dựa trên mã nguồn hiện có. Nếu bạn chỉnh sửa cấu trúc control hoặc logic, cập nhật hướng dẫn tương ứng.</p>
+    <p>&copy; Dự án Quản lý Bán hàng — Hướng dẫn cơ bản</p>
+  </footer>
+</body>
+</html>
