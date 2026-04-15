@@ -5,18 +5,92 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</title>
   <style>
-    body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:#121214;color:#E8E8E8;margin:0;padding:24px;}
+    /* ĐOẠN CSS MỚI CỦA BẠN ĐÃ ĐƯỢC CHÈN VÀO ĐÂY */
+    :root{
+      --bg:#121214;
+      --panel:#1b1b1f;
+      --muted:#9a9a9a;
+      --text:#E8E8E8;
+      --accent:#ffd0e0;
+      --accent-2:#A8C1FF;
+      --card:#23232a;
+      --kbd-bg:#1f1f24;
+      --note-border:#ffd0e0;
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+    }
+
+    /* Header / Title */
     header{margin-bottom:18px}
-    h1{font-size:24px;margin:0 0 6px}
-    h2{font-size:18px;margin:18px 0 8px;color:#ffd0e0}
-    h3{font-size:14px;margin:12px 0 6px;color:#ffd0e0}
+    h1{font-size:28px;margin:0 0 8px}
+    h2{font-size:20px;margin:18px 0 10px;color:var(--accent)}
+    h3{font-size:15px;margin:12px 0 6px;color:var(--accent)}
     p{margin:8px 0}
-    ul{margin:6px 0 12px 20px}
-    code{background:#1e1e1f;padding:2px 6px;border-radius:4px;color:#fff}
-    .toc a{color:#a8c1ff;text-decoration:none}
-    .note{background:#23232a;padding:10px;border-left:4px solid #ffd0e0;margin:12px 0}
-    footer{margin-top:28px;font-size:12px;color:#9a9a9a}
-    .kbd{display:inline-block;padding:2px 6px;border-radius:4px;background:#1f1f24;border:1px solid #2c2c34}
+
+    /* Table of contents */
+    .toc{margin-bottom:10px}
+    .toc ul{margin:6px 0 14px 18px;padding:0}
+    .toc li{margin:6px 0}
+    .toc a{color:var(--accent-2);text-decoration:none}
+    .toc a:hover{text-decoration:underline;opacity:.95}
+
+    /* Sections */
+    section{margin-bottom:18px;padding:12px;border-radius:8px;background:transparent}
+    section > ul{margin-left:20px}
+    .note{
+      background:var(--card);
+      padding:12px;
+      border-left:4px solid var(--note-border);
+      margin:12px 0;
+      border-radius:6px;
+    }
+
+    /* Inline code and blocks */
+    code, pre{background:#1e1e1f;color:#fff;padding:2px 6px;border-radius:4px}
+    pre{display:block;padding:12px;overflow:auto;border-radius:6px;font-size:13px}
+
+    /* Keyboard key style */
+    .kbd{
+      display:inline-block;
+      padding:3px 8px;
+      border-radius:6px;
+      background:var(--kbd-bg);
+      border:1px solid #2c2c34;
+      font-family:monospace;
+      font-size:13px;
+      color:var(--text);
+    }
+
+    /* Footer */
+    footer{margin-top:28px;font-size:13px;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      body{padding:14px}
+      h1{font-size:20px}
+      .toc ul{margin-left:14px}
+    }
+
+    /* Accessibility: high contrast focus */
+    a:focus, button:focus, input:focus, select:focus{
+      outline:2px dashed var(--accent-2);
+      outline-offset:3px;
+    }
+
+    /* Small utilities */
+    ul{padding-left:20px}
+    strong{color:var(--text)}
   </style>
 </head>
 <body>
@@ -63,7 +137,7 @@
 
   <section id="login">
     <h2>2. Đăng nhập & Quên mật khẩu</h2>
-    <p>Trang đăng nhập yêu cầu <strong>Tên đăng nhập</strong> và <strong>Mật khẩu</strong>. Sau khi đăng nhập thành công, hệ thống sẽ gán thông tin người dùng (tên, quyền, chi nhánh) vào giao diện chính.</p>
+    <p>Trang đăng nhập yêu cầu <strong>Tên đăng nhập</strong> và <strong>Mật khẩu</strong>. Sau khi đăng nhập thành công, hệ thống sẽ gán thôngত্তি người dùng (tên, quyền, chi nhánh) vào giao diện chính.</p>
     <ul>
       <li>Quên mật khẩu: dùng liên kết "Quên mật khẩu" để mở form lấy lại mật khẩu (theo luồng đã triển khai).</li>
       <li>Nếu tài khoản bị khóa (TrangThai = false) sẽ không thể đăng nhập.</li>
@@ -98,8 +172,8 @@
 
     <h3>Một số lưu ý quan trọng</h3>
     <ul>
-      <li>ProductCard hiển thị theo thiết kế file Designer của control `UC_ProductCard` — mặc định hiển thị font kích thước thiết kế (thiết kế ban đầu), thay đổi kích thước hệ thống KHÔNG làm thay đổi font hiển thị ProductCard (điều này là intentional).</li>
-      <li>Nếu bạn muốn ProductCard đổi theo cài đặt hệ thống, hãy chỉnh `UC_ProductCard` (labels) để chịu ảnh hưởng font chung hoặc bật tính năng đồng bộ trong mã.</li>
+      <li>ProductCard hiển thị theo thiết kế file Designer của control <code>UC_ProductCard</code> — mặc định hiển thị font kích thước thiết kế (thiết kế ban đầu), thay đổi kích thước hệ thống KHÔNG làm thay đổi font hiển thị ProductCard (điều này là intentional).</li>
+      <li>Nếu bạn muốn ProductCard đổi theo cài đặt hệ thống, hãy chỉnh <code>UC_ProductCard</code> (labels) để chịu ảnh hưởng font chung hoặc bật tính năng đồng bộ trong mã.</li>
       <li>Để tránh lặp card khi reload: hệ thống đã xóa sạch controls trước khi add lại; nếu vẫn gặp lặp, kiểm tra log hoặc gọi Load lại (F5).</li>
     </ul>
   </section>
@@ -138,7 +212,7 @@
     <div class="note">
       <strong>Lưu ý thiết kế:</strong>
       <ul>
-        <li>Thay đổi font/kích cỡ sẽ được áp dụng đệ quy lên hầu hết các control trên form chính và usercontrols, nhưng <em>ProductCard</em> đã được cấu hình giữ nguyên font thiết kế để bảo toàn bố cục thẻ. Nếu bạn muốn ProductCard cũng thay đổi, cần sửa `UC_ProductCard` để cho phép đồng bộ.</li>
+        <li>Thay đổi font/kích cỡ sẽ được áp dụng đệ quy lên hầu hết các control trên form chính và usercontrols, nhưng <em>ProductCard</em> đã được cấu hình giữ nguyên font thiết kế để bảo toàn bố cục thẻ. Nếu bạn muốn ProductCard cũng thay đổi, cần sửa <code>UC_ProductCard</code> để cho phép đồng bộ.</li>
       </ul>
     </div>
   </section>
@@ -171,11 +245,11 @@
     <h3>Avatar/ảnh banner không hiển thị</h3>
     <ul>
       <li>Kiểm tra trường ảnh trong DB (blob) được lưu đúng định dạng PNG/JPEG.</li>
-      <li>Nếu resource mặc định bị xóa, phục hồi file trong `Properties/Resources` hoặc đặt ảnh mặc định mới.</li>
+      <li>Nếu resource mặc định bị xóa, phục hồi file trong <code>Properties/Resources</code> hoặc đặt ảnh mặc định mới.</li>
     </ul>
 
     <h3>ProductCard không đổi font khi thay theme</h3>
-    <p>Đây là hành vi cố ý: ProductCard giữ font từ thiết kế. Nếu muốn thay đổi, chỉnh file `UC_ProductCard` để cho phép nhận font hệ thống.</p>
+    <p>Đây là hành vi cố ý: ProductCard giữ font từ thiết kế. Nếu muốn thay đổi, chỉnh file <code>UC_ProductCard</code> để cho phép nhận font hệ thống.</p>
   </section>
 
   <section id="faq">
@@ -184,7 +258,7 @@
     <p>Hệ thống ẩn các chức năng nhạy cảm nếu tài khoản không thuộc nhóm Quản lý/Admin.</p>
 
     <h3>Muốn thêm trường cho sản phẩm (ví dụ: màu sắc) phải làm sao?</h3>
-    <p>Sửa model `SanPham` trong thư mục Data, cập nhật DbContext/migrations và chỉnh UI tương ứng (form thêm/sửa sản phẩm + hiển thị trên ProductCard).</p>
+    <p>Sửa model <code>SanPham</code> trong thư mục Data, cập nhật DbContext/migrations và chỉnh UI tương ứng (form thêm/sửa sản phẩm + hiển thị trên ProductCard).</p>
   </section>
 
   <section id="contact">
