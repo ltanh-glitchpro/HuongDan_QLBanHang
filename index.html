@@ -4,8 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</title>
   <style>
-    /* ĐOẠN CSS MỚI CỦA BẠN ĐÃ ĐƯỢC CHÈN VÀO ĐÂY */
     :root{
       --bg:#121214;
       --panel:#1b1b1f;
@@ -18,7 +21,6 @@
       --note-border:#ffd0e0;
     }
 
-    /* Base */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -30,22 +32,16 @@
       -webkit-font-smoothing:antialiased;
       padding:28px;
     }
-
-    /* Header / Title */
     header{margin-bottom:18px}
     h1{font-size:28px;margin:0 0 8px}
     h2{font-size:20px;margin:18px 0 10px;color:var(--accent)}
     h3{font-size:15px;margin:12px 0 6px;color:var(--accent)}
     p{margin:8px 0}
-
-    /* Table of contents */
     .toc{margin-bottom:10px}
     .toc ul{margin:6px 0 14px 18px;padding:0}
     .toc li{margin:6px 0}
     .toc a{color:var(--accent-2);text-decoration:none}
     .toc a:hover{text-decoration:underline;opacity:.95}
-
-    /* Sections */
     section{margin-bottom:18px;padding:12px;border-radius:8px;background:transparent}
     section > ul{margin-left:20px}
     .note{
@@ -55,12 +51,8 @@
       margin:12px 0;
       border-radius:6px;
     }
-
-    /* Inline code and blocks */
     code, pre{background:#1e1e1f;color:#fff;padding:2px 6px;border-radius:4px}
     pre{display:block;padding:12px;overflow:auto;border-radius:6px;font-size:13px}
-
-    /* Keyboard key style */
     .kbd{
       display:inline-block;
       padding:3px 8px;
@@ -71,32 +63,55 @@
       font-size:13px;
       color:var(--text);
     }
-
-    /* Footer */
     footer{margin-top:28px;font-size:13px;color:var(--muted)}
-
-    /* Responsive */
     @media (max-width:900px){
       body{padding:14px}
       h1{font-size:20px}
       .toc ul{margin-left:14px}
     }
-
-    /* Accessibility: high contrast focus */
     a:focus, button:focus, input:focus, select:focus{
       outline:2px dashed var(--accent-2);
       outline-offset:3px;
     }
-
-    /* Small utilities */
     ul{padding-left:20px}
     strong{color:var(--text)}
+    /* Hiệu ứng card nổi cho section */
+    section {
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+      transition: box-shadow 0.2s;
+    }
+    section:hover {
+      box-shadow: 0 6px 24px 0 rgba(0,0,0,0.18);
+      background: var(--panel);
+    }
+    /* Hiệu ứng link */
+    a {
+      transition: color 0.2s;
+    }
+    /* Định dạng bảng (nếu có) */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      color: var(--text);
+      margin: 12px 0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #22222a;
+    }
+    th {
+      background: var(--panel);
+      color: var(--accent-2);
+      text-align: left;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Hướng dẫn sử dụng — Phần mềm Quản lý Bán hàng</h1>
-    <p>Phiên bản hướng dẫn cho bộ mã nguồn hiện tại. Tài liệu này mô tả các chức năng chính và cách thao tác để người dùng nhanh chóng sử dụng ứng dụng.</p>
   </header>
 
   <section class="toc">
